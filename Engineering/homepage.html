@@ -8,21 +8,32 @@
   <body>
     <div class="header">
       <div class="left-section">
+        <input class="search-bar" type="text" placeholder="Search">
+        <button class="search-button"></button>
+
+        <input class="budget-input-field" type="number" placeholder="Budget ($)">
       </div>
 
       <div class="middle-section">
-        <input class="search-bar" type="text" placeholder="Search">
-        <button class="search-button"></button>
-      </div>
-
-      <div class="right-section">
-        <input class="input-field" type="number" placeholder="Budget ($)">
-        <select class="input-field">
-          <option value="" disabled selected>Property Type</option>
+        <select class="property-input-field">
+          <option value="disabled selected">Property Type</option>
           <option value="house">House</option>
           <option value="apartment">Apartment</option>
           <option value="condo">Condo</option>
         </select>
+
+
+        
+      </div>
+
+      <div class="right-section">
+        <select class="bed-input-field">
+          <option value="disabled selected">Beds/Baths</option>
+          <option value="house">House</option>
+          <option value="apartment">Apartment</option>
+          <option value="condo">Condo</option>
+        </select>
+        
       </div>
     </div>
 
