@@ -1,9 +1,13 @@
 <!DOCTYPE html>
 <html>
   <head>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Project Title</title>
     <link rel="stylesheet" href="header.css"> 
     <link rel="stylesheet" href="map-display.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Chelsea+Market&display=swap" rel="stylesheet">
   </head>
   <body>
     <div class="header">
@@ -15,24 +19,41 @@
       </div>
 
       <div class="middle-section">
-        <select class="property-input-field">
-          <option value="disabled selected">Property Type</option>
-          <option value="house">House</option>
-          <option value="apartment">Apartment</option>
-          <option value="condo">Condo</option>
-        </select>
+        <div class="custom-property-dropdown">
+          <div class="dropdown-property-header">Property Type</div>
+          <div class="dropdown-property-body">
+            <label><input type="checkbox" value="house"> House</label>
+            <label><input type="checkbox" value="apartment"> Apartment</label>
+            <label><input type="checkbox" value="condo"> Condo</label>
+            <button class="dropdown-property-done">Done</button>
+          </div>
+        </div>
 
 
         
       </div>
 
       <div class="right-section">
-        <select class="bed-input-field">
-          <option value="disabled selected">Beds/Baths</option>
-          <option value="house">House</option>
-          <option value="apartment">Apartment</option>
-          <option value="condo">Condo</option>
-        </select>
+        <div class="custom-bedbath-dropdown">
+          <div class="bedbath-header">Beds/Baths</div>
+          <div class="bedbath-body">
+            <div class="dropdown-section">
+              <div class="section-label">Beds</div>
+              <label><input type="radio" name="beds" value="Any"> Any</label>
+              <label><input type="radio" name="beds" value="1+"> 1+</label>
+              <label><input type="radio" name="beds" value="2+"> 2+</label>
+              <label><input type="radio" name="beds" value="3+"> 3+</label>
+            </div>
+            <div class="dropdown-section">
+              <div class="section-label">Baths</div>
+              <label><input type="radio" name="baths" value="Any"> Any</label>
+              <label><input type="radio" name="baths" value="1+"> 1+</label>
+              <label><input type="radio" name="baths" value="2+"> 2+</label>
+              <label><input type="radio" name="baths" value="3+"> 3+</label>
+            </div>
+            <button class="dropdown-done">Done</button>
+          </div>
+        </div>
         
       </div>
     </div>
@@ -42,5 +63,6 @@
         Where Map is Displayed
       </div>
     </div>
+    <script src="box.js"></script>
   </body>
 </html>
