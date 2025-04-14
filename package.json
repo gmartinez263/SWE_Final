@@ -16,6 +16,7 @@
     "mysql2": "^3.13.0",
     "selenium-webdriver": "^4.29.0",
     "sequelize": "^6.37.6",
+    "swe_final": "file:",
     "winston": "^3.17.0"
   }
 }
