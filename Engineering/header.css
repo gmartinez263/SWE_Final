@@ -49,6 +49,10 @@
   margin-left: -55px; 
 }
 
+.search-button:hover {
+  cursor:pointer;
+}
+
 
 .right-section {
   display: flex;
