@@ -41,7 +41,20 @@ class scraper{
 
     // split the address into street, city, state, and zip
     static async cleanAddress(rawAddress) {
+        // format of a scraped address is:
+        // "streetAddress, city, state zip"
 
+        // split comma separated parts
+        let [street, city, stateAndZip] = rawAddress.split(",");
+
+        // remove leading whitespace
+        city = city.trimStart();
+        stateAndZip = stateAndZip.trimStart();
+
+        // split state and zip
+        let [state, zip] = stateAndZip.split(" ");
+
+        return [street, city, state, zip];
     }
 
     static async scrapeListings(){
@@ -66,14 +79,14 @@ class scraper{
         await aptDriver.wait(until.elementsLocated(By.css('li.mortar-wrapper')), 10000);
         let buildings = await  apts.findElements(By.css('li.mortar-wrapper'));
 
-        let propType, address, bedsMin, bedsMax, priceMin, priceMax, amen, amenList, amenString;
+        let propType, street, city, state, zip, bedsMin, bedsMax, priceMin, priceMax, amen, amenList, amenString;
         try{
             // testing using just one building -- reinstate for loop when it's all working
             // for(let building of buildings){
             let building = buildings[0];
                 console.log('scraping building');
                 propType = await building.findElement(By.className('property-title')).getAttribute('title');
-                address = await building.findElement(By.className('property-address')).getText();
+                [street, city, state, zip] = await scraper.cleanAddress(await building.findElement(By.className('property-address')).getText());
                 [priceMin, priceMax] = await scraper.cleanNumericalRange(await building.findElement(By.className('property-pricing')).getText());
                 [bedsMin, bedsMax] = await scraper.cleanNumericalRange(await building.findElement(By.className('property-beds')).getText());
                 amenList = await building.findElement(By.className('property-amenities')).findElements(By.css('span'));
@@ -89,7 +102,10 @@ class scraper{
                         title: propType,
                         // housing_type: propType,
                         //      just chucking the whole address into the street address field for now
-                        street_address: address,
+                        street_address: street,
+                        city: city,
+                        state: state,
+                        zip: zip,
                         price_min: priceMin,
                         price_max: priceMax,
                         // squarefeet_min: 0,
