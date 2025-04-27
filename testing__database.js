@@ -3,6 +3,8 @@
 // 1. the contents of the building table are read and displayed
 // 2. write a new row into the building table that only has housing_type filled in
 
+import { Listing } from "./listing.js";
+
 import { createClient } from 'https://cdn.jsdelivr.net/npm/@supabase/supabase-js/+esm'
 const supabaseUrl = 'https://smdxjawlbbmowsptrieo.supabase.co';
 // this is the public anon key
@@ -14,27 +16,36 @@ let message = document.getElementById("text-output");
 
 
 button.addEventListener("click", async (e) => {
-    message.textContent = await getInfo();
+    // message.innerHTML = await getInfo();
+    let listing = new Listing(7);
+    message.innerHTML = listing.toString();
 });
 
 async function getInfo() {
     // fetch data
     const { data, error } = await supabase
     .from('building')
-    .select();
+    .select()
+    .eq('state', 'CA');
 
     if (error) {
         console.log(error)
     }
     else {
         // return data
-        return JSON.stringify(data);
+        let listing = JSON.parse(JSON.stringify(data))
+
+        console.log(data[0]);
+
+        
+        return data[0]['street_address'];
     }
 
     // write to database -- not super sure we even need the assignment??? i was just following the example
-    const {aaa, err} = await supabase
-    .from('building')
-    .insert([
-        { housing_type: 'Apartment'}
-    ]);
+    // const {aaa, err} = await supabase
+    // .from('building')
+    // .insert([
+    //     { housing_type: 'Apartment'}
+    // ]);
 }
+
