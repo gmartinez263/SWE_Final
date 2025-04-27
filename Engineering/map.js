@@ -13,6 +13,10 @@ map.setMaxBounds(bounds);
 map.on('drag', function() {
     map.panInsideBounds(bounds, { animate: false });
 });
+
+// layer group to hold all the markers
+const markers = L.layerGroup();
+
 // Listings
 const listings = [
     {
@@ -48,12 +52,14 @@ const listings = [
       ${description || ''}
     `;
   
-    L.marker([lat, lng])
+    markers.addLayer(L.marker([lat, lng]))
       .addTo(map)
       .bindPopup(popupContent);
   }
   
-  document.querySelector('.search-button').addEventListener('click', () => {
+  document.querySelector('.search-button').addEventListener('click', (e) => {
+    markers.clearLayers();
+
     listings.forEach(listing => {
       addListingMarker(map, listing);
     });
