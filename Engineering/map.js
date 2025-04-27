@@ -1,3 +1,5 @@
+import { searchListings } from "./search.js";
+
 // code from https://leafletjs.com/examples/quick-start/
 let map = L.map('map').setView([51.505, -0.09], 13);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
@@ -21,21 +23,21 @@ const markers = L.layerGroup();
 const listings = [
     {
       title: 'Cozy Studio Apartment',
-      price: '$1200/month',
+      price_min: '$1200/month',
       description: 'Great view, close to shops!',
       lat: 33.8333,
       lng: -118.2812
     },
     {
       title: 'Modern Loft',
-      price: '$1800/month',
+      price_min: '$1800/month',
       description: 'Lots of sunlight, near transit.',
       lat: 33.815,
       lng: -118.275
     },
     {
       title: 'Family Home',
-      price: '$2500/month',
+      price_min: '$2500/month',
       description: '3 bed, 2 bath with backyard.',
       lat: 33.82,
       lng: -118.29
@@ -44,23 +46,28 @@ const listings = [
   
   // marker function
   function addListingMarker(map, listing) {
-    const { lat, lng, title, price, description } = listing;
-  
+    const { lat, lng, title, price_min, description } = listing;
     const popupContent = `
       <strong>${title}</strong><br>
-      Price: ${price}<br>
+      Price: ${price_min}<br>
       ${description || ''}
     `;
   
-    markers.addLayer(L.marker([lat, lng]))
-      .addTo(map)
-      .bindPopup(popupContent);
+    markers.addLayer(L.marker([lat, lng]).bindPopup(popupContent))
+    .addTo(map);
   }
   
-  document.querySelector('.search-button').addEventListener('click', (e) => {
+  document.querySelector('.search-button').addEventListener('click', async (e) => {
     markers.clearLayers();
 
-    listings.forEach(listing => {
+    // clear listings array
+    listings.length = 0;
+
+    // couldn't get it to work with concat so this awkwardly pushes an array into the listings array
+    listings.push(await searchListings());
+
+    // then this gets the first element of the listings array, which is the array that actually contains the listings
+    listings[0].forEach(listing => {
       addListingMarker(map, listing);
     });
   });
