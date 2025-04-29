@@ -56,7 +56,8 @@
   justify-content: center;
 }
 
-.budget-input-field {
+.budget-input-field,
+.sqft-input-field {
   height: 35px; 
   padding: 5px 10px; 
   border: 1px solid #ccc;
@@ -71,78 +72,20 @@
   color: #294825;
 }
 
-.budget-input-field::placeholder {
+.sqft-input-field {
+  margin-left: 0px;
+}
+
+.budget-input-field::placeholder,
+.sqft-input-field::placeholder {
   color: #294825;
 }
 
-select.budget-input-field {
+select.budget-input-field,
+select.sqft-input-field {
   height: 35px; 
   padding: 5px 10px;
   width: 200px; 
-}
-
-.custom-property-dropdown {
-  position: relative;
-  width: 200px;
-  font-family: 'Chelsea Market', cursive;
-  font-size: 16px;
-  color: #294825;
-}
-
-.dropdown-property-header {
-  background-color: #DDE5B6;
-  border: 1px solid #A9B388;
-  border-radius: 30px;
-  padding: 10px 15px;
-  cursor: pointer;
-  user-select: none;
-}
-
-.dropdown-property-body {
-  display: none;
-  flex-direction: column;
-  position: absolute;
-  top: 110%;
-  left: 0;
-  width: 100%;
-  background-color: #fff;
-  border: 1px solid #A9B388;
-  border-radius: 15px;
-  box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
-  z-index: 10;
-  padding: 10px;
-}
-
-.dropdown-property-body label {
-  display: flex;
-  align-items: center;
-  padding: 6px 5px;
-  cursor: pointer;
-  border-radius: 8px;
-}
-
-.dropdown-property-body label:hover {
-  background-color: #DDE5B6;
-}
-
-.dropdown-property-body input[type="checkbox"] {
-  margin-right: 8px;
-  accent-color: #294825;
-}
-
-.dropdown-property-done {
-  margin-top: 10px;
-  background-color: #A9B388;
-  border: none;
-  border-radius: 8px;
-  padding: 6px 10px;
-  color: #fff;
-  cursor: pointer;
-  font-family: 'Chelsea Market';
-}
-
-.dropdown-property-done:hover {
-  background-color: #91A475;
 }
 
 .custom-bedbath-dropdown {
