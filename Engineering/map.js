@@ -8,7 +8,7 @@ L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
 }).addTo(map);
 
 // layer group to hold all the markers
-const markers = L.layerGroup();
+const markers = L.featureGroup();
 
 // Listings
 const listings = [
@@ -71,6 +71,8 @@ const listings = [
 
     // then this gets the first element of the listings array, which is the array that actually contains the listings
     listings[0].forEach(listing => {
-      addListingMarker(map, listing);
+        addListingMarker(map, listing);
     });
-  }
+
+    map.flyToBounds(markers.getBounds(), {duration: 0.75});
+}
