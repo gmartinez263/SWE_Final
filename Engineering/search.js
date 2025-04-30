@@ -43,7 +43,7 @@ export async function searchListings() {
   const { data, error } = await supabase
     .from('building')
     .select()
-    .or(`city.eq.${cityOrZip}, zip.eq.${cityOrZip}`)
+    .or(`city.ilike.${cityOrZip}, zip.ilike.${cityOrZip}`)
     .lte('price_min', budget)
     .gte('beds_max', beds)
     .gte('baths_max', baths)
