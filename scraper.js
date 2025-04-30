@@ -23,10 +23,14 @@ class scraper{
     // clean any data that's a numerical range
     static async cleanNumericalRange(rawData) {
         // too annoying to do the other way around so i split it first and then removed nondigit characters from each half individually
+        let minData, maxData;
 
-        // split data into min and max
-        let [minData, maxData] = rawData.split("-");
-
+        if (rawData.toLowerCase().includes("-")) {
+            [minData, maxData] = rawData.split("-");
+        }else{
+            minData = rawData;
+            maxData = rawData;
+        }
         // temp fix for handling studios for now (maybe we let beds be string in the db idk)
         if (minData.toLowerCase().includes("studio"))
             minData = "1";
@@ -76,22 +80,57 @@ class scraper{
         console.log("gathering listings");
         let apts = await aptDriver.findElement(By.id('placardContainer'));
 
-        await aptDriver.wait(until.elementsLocated(By.css('li.mortar-wrapper')), 10000);
-        let buildings = await  apts.findElements(By.css('li.mortar-wrapper'));
-
-        let propType, street, city, state, zip, bedsMin, bedsMax, priceMin, priceMax, amen, amenList, amenString;
+        let propType, street, city, state, zip, bedsMin, bedsMax, priceMin, priceMax, sqrftMin, sqrftMax, bathMin, bathMax, amen, amenList, amenString;
         try{
             // testing using just one building -- reinstate for loop when it's all working
-            // for(let building of buildings){
-            let building = buildings[0];
-                console.log('scraping building');
-                propType = await building.findElement(By.className('property-title')).getAttribute('title');
+            let i;
+            await aptDriver.wait(until.elementsLocated(By.css('li.mortar-wrapper')), 10000);
+            let buildings = await  apts.findElements(By.css('li.mortar-wrapper'));
+
+            let building, length = buildings.length;
+            for(let b = 0; b < length; b++){
+                await aptDriver.wait(until.elementLocated(By.id('placardContainer')), 20000);
+                apts = await aptDriver.findElement(By.id('placardContainer'));
+                buildings = await  apts.findElements(By.css('li.mortar-wrapper'));
+                console.log('listings page and buildings reloaded');
+                building = buildings[b];
+                console.log('clicked on listing: ' + b);
                 [street, city, state, zip] = await scraper.cleanAddress(await building.findElement(By.className('property-address')).getText());
-                [priceMin, priceMax] = await scraper.cleanNumericalRange(await building.findElement(By.className('property-pricing')).getText());
-                [bedsMin, bedsMax] = await scraper.cleanNumericalRange(await building.findElement(By.className('property-beds')).getText());
-                amenList = await building.findElement(By.className('property-amenities')).findElements(By.css('span'));
-                amen = await Promise.all(amenList.map(async (amenity) => await amenity.getAttribute('textContent')));
-                amenString = amen.join(', ');
+                propType = await building.findElement(By.className('property-title')).getAttribute('title');
+                try{
+                    amenList = await building.findElement(By.className('property-amenities')).findElements(By.css('span'));
+                    amen = await Promise.all(amenList.map(async (amenity) => await amenity.getAttribute('textContent')));
+                    amenString = amen.join(', ');
+                }catch(e){
+                    console.log('no amenities found for this building');
+                    amenString = 'No amenities found';
+                }
+                
+
+                building.click();
+                console.log('clicked on building');
+                await aptDriver.wait(until.elementLocated(By.className('priceBedRangeInfo')), 10000);
+                let priceBedRange = await aptDriver.findElement(By.className('priceBedRangeInfo')); 
+
+                i = 0;
+                for(let info of await priceBedRange.findElements(By.className('rentInfoDetail'))){
+                    if(i==0)
+                        [priceMin, priceMax] = await scraper.cleanNumericalRange(await info.getText());
+                    if(i==1)
+                        [bedsMin, bedsMax] = await scraper.cleanNumericalRange(await info.getText());
+                    if(i==2)
+                        [bathMin, bathMax] = await scraper.cleanNumericalRange(await info.getText());
+                    if(i==3)
+                        [sqrftMin, sqrftMax] = await scraper.cleanNumericalRange(await info.getText());
+                    i++;
+                }
+                console.log('got building rent info');
+                aptDriver.navigate().back();
+                console.log('navigating back to listings page');
+
+                console.log('waiting for listings page to load again');
+                await aptDriver.wait(until.elementsLocated(By.css('li.mortar-wrapper')), 10000);
+                
 
                 console.log('writing to supabase');
                 // commented out the stuff we dont have infor for yet
@@ -100,28 +139,30 @@ class scraper{
                 .insert([
                     {
                         title: propType,
-                        // housing_type: propType,
-                        //      just chucking the whole address into the street address field for now
                         street_address: street,
                         city: city,
                         state: state,
                         zip: zip,
                         price_min: priceMin,
                         price_max: priceMax,
-                        // squarefeet_min: 0,
-                        // squarefeet_max: 0,
+                        squarefeet_min: sqrftMin,
+                        squarefeet_max: sqrftMax,
                         beds_min: bedsMin,
                         beds_max: bedsMax,
-                        // baths_min: 0,
-                        // baths_max: 0,
+                        baths_min: bathMin,
+                        baths_max: bathMax,
+                        description: amenString,
+                        lat: 0,
+                        lng: 0,
                     },
                 ]);
+
                 if(error){
                     console.log('Supabase Error: ', error);
                 }else{
                     console.log('Data inserted successfully:', data);
                 }
-            // }
+            }
 
         }catch(err){
             console.log('error: ' + err);
