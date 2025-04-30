@@ -1,20 +1,11 @@
 import { searchListings } from "./search.js";
 
 // code from https://leafletjs.com/examples/quick-start/
-let map = L.map('map').setView([51.505, -0.09], 13);
+let map = L.map('map').setView([33.83, -118.28], 13);
 L.tileLayer('https://tile.openstreetmap.org/{z}/{x}/{y}.png', {
     maxZoom: 19,
     attribution: '&copy; <a href="http://www.openstreetmap.org/copyright">OpenStreetMap</a>'
 }).addTo(map);
-// Lock view to Carson area
-let bounds = L.latLngBounds(
-    [33.79, -118.33],  // Southwest corner
-    [33.87, -118.23]   // Northeast corner
-);
-map.setMaxBounds(bounds);
-map.on('drag', function() {
-    map.panInsideBounds(bounds, { animate: false });
-});
 
 // layer group to hold all the markers
 const markers = L.layerGroup();
