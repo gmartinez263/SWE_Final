@@ -51,6 +51,16 @@ const listings = [
   }
   
   document.querySelector('.search-button').addEventListener('click', async (e) => {
+    await search();
+  });
+
+  document.querySelector('.search-bar').addEventListener('keydown', async (e) => {
+    if (e.key === "Enter") {
+        await search();
+    }
+  });
+
+  async function search() {
     markers.clearLayers();
 
     // clear listings array
@@ -63,4 +73,4 @@ const listings = [
     listings[0].forEach(listing => {
       addListingMarker(map, listing);
     });
-  });
+  }
