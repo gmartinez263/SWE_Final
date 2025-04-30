@@ -46,11 +46,12 @@ const listings = [
   
   // marker function
   function addListingMarker(map, listing) {
-    const { lat, lng, title, price_min, price_max, description, beds_min, beds_max, baths_min, baths_max } = listing;
+    const { lat, lng, title, zip, price_min, price_max, description, beds_min, beds_max, baths_min, baths_max, squarefeet_min, squarefeet_max } = listing;
     const popupContent = `
-      <strong>${title}</strong><br>
+      <strong>${title} ${zip}</strong><br>
       Price: \$${price_min} - \$${price_max}/month<br>
       Beds: ${beds_min}-${beds_max}    Baths: ${baths_min}-${baths_max}<br>
+      Square Feet: ${squarefeet_min} - ${squarefeet_max}<br>
       ${description || ''}
     `;
   
