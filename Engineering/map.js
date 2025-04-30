@@ -54,7 +54,7 @@ const listings = [
     await search();
   });
 
-  document.querySelector('.search-bar').addEventListener('keydown', async (e) => {
+  document.body.addEventListener('keydown', async (e) => {
     if (e.key === "Enter") {
         await search();
     }
