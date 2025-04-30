@@ -8,7 +8,7 @@
   left: 0;
   right: 0;
   z-index: 100;
-  background-color: #294825;
+  background-color: #F5BCA9;
   border-bottom: 1px solid rgb(228, 228, 228);
   padding: 0 20px;
 }
@@ -41,10 +41,10 @@
 .search-button {
   height: 35px;
   width: 55px;
-  background-color: #A9B388;
+  background-color: #F5E0D0;
   border-width: 1px;
   border-style: solid;
-  border-color: #A9B388;
+  border-color: #F6C4B3;
   border-radius: 0 15px 15px 0;
   margin-left: -55px; 
 }
@@ -63,16 +63,16 @@
 .sqft-input-field {
   height: 35px; 
   padding: 5px 10px; 
-  border: 1px solid #ccc;
+  border: 1px solid #F6C4B3;
   border-radius: 5px;
   font-size: 16px; 
   width: 200px; 
   margin-left: 80px;
   font-family: Chelsea Market;
   border-radius: 30px;
-  border: 1px solid #A9B388;
-  background-color: #DDE5B6;
-  color: #294825;
+  border: 1px solid #F6C4B3;
+  background-color: #D0BBA8;
+  color: #EED6C1;
 }
 
 .sqft-input-field {
@@ -81,7 +81,7 @@
 
 .budget-input-field::placeholder,
 .sqft-input-field::placeholder {
-  color: #294825;
+  color: #EED6C1;
 }
 
 select.budget-input-field,
@@ -96,13 +96,13 @@ select.sqft-input-field {
   width: 200px;
   font-family: 'Chelsea Market', cursive;
   font-size: 16px;
-  color: #294825;
+  color: #EED6C1;
   margin-right: 100px;
 }
 
 .bedbath-header {
-  background-color: #DDE5B6;
-  border: 1px solid #A9B388;
+  background-color: #D0BBA8;
+  border: 1px solid #F6C4B3;
   border-radius: 30px;
   padding: 5px 10px;
   cursor: pointer;
@@ -119,8 +119,8 @@ select.sqft-input-field {
   top: 110%;
   left: 0;
   width: 100%;
-  background-color: #fff;
-  border: 1px solid #A9B388;
+  background-color: white;
+  border: 1px solid #F6C4B3;
   border-radius: 15px;
   box-shadow: 0px 4px 12px rgba(0, 0, 0, 0.15);
   z-index: 10;
@@ -144,26 +144,26 @@ select.sqft-input-field {
 }
 
 .bedbath-body label:hover {
-  background-color: #DDE5B6;
+  background-color: #ECE8E1;
 }
 
 .bedbath-body input[type="radio"] {
   margin-right: 6px;
-  accent-color: #294825;
+  accent-color: #ECE8E1;
 }
 
 .dropdown-done {
-  background-color: #A9B388;
+  background-color: #F6C4B3;
   border: none;
   border-radius: 8px;
   padding: 6px 10px;
-  color: #fff;
+  color: #D0BBA8;
   cursor: pointer;
   font-family: 'Chelsea Market';
 }
 
 .dropdown-done:hover {
-  background-color: #91A475;
+  background-color: #ECE8E1;
 }
 
 
