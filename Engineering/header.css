@@ -101,9 +101,13 @@ select.sqft-input-field {
   background-color: #DDE5B6;
   border: 1px solid #A9B388;
   border-radius: 30px;
-  padding: 10px 15px;
+  padding: 5px 10px;
   cursor: pointer;
   user-select: none;
+  width: 200px;
+  height: 35px; 
+  display: flex;                
+  align-items: center; 
 }
 
 .bedbath-body {
