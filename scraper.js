@@ -80,9 +80,8 @@ class scraper{
         console.log("gathering listings");
         let apts = await aptDriver.findElement(By.id('placardContainer'));
 
-        let propType, street, city, state, zip, bedsMin, bedsMax, priceMin, priceMax, sqrftMin, sqrftMax, bathMin, bathMax, amen, amenList, amenString;
+        let propTitle, street, city, state, zip, bedsMin, bedsMax, priceMin, priceMax, sqrftMin, sqrftMax, bathMin, bathMax, amen, amenList, amenString;
         try{
-            // testing using just one building -- reinstate for loop when it's all working
             let i;
             await aptDriver.wait(until.elementsLocated(By.css('li.mortar-wrapper')), 10000);
             let buildings = await  apts.findElements(By.css('li.mortar-wrapper'));
@@ -96,7 +95,7 @@ class scraper{
                 building = buildings[b];
                 console.log('clicked on listing: ' + b);
                 [street, city, state, zip] = await scraper.cleanAddress(await building.findElement(By.className('property-address')).getText());
-                propType = await building.findElement(By.className('property-title')).getAttribute('title');
+                propTitle = await building.findElement(By.className('property-title')).getAttribute('title');
                 try{
                     amenList = await building.findElement(By.className('property-amenities')).findElements(By.css('span'));
                     amen = await Promise.all(amenList.map(async (amenity) => await amenity.getAttribute('textContent')));
@@ -116,15 +115,19 @@ class scraper{
                 for(let info of await priceBedRange.findElements(By.className('rentInfoDetail'))){
                     if(i==0)
                         [priceMin, priceMax] = await scraper.cleanNumericalRange(await info.getText());
-                    if(i==1)
+                    else if(i==1)
                         [bedsMin, bedsMax] = await scraper.cleanNumericalRange(await info.getText());
-                    if(i==2)
+                    else if(i==2)
                         [bathMin, bathMax] = await scraper.cleanNumericalRange(await info.getText());
-                    if(i==3)
+                    else if(i==3)
                         [sqrftMin, sqrftMax] = await scraper.cleanNumericalRange(await info.getText());
                     i++;
                 }
                 console.log('got building rent info');
+
+                let lat = await aptDriver.findElement(By.css('meta[property="place:location:latitude"]')).getAttribute('content');
+                let lng = await aptDriver.findElement(By.css('meta[property="place:location:longitude"]')).getAttribute('content');
+
                 aptDriver.navigate().back();
                 console.log('navigating back to listings page');
 
@@ -138,7 +141,7 @@ class scraper{
                 .from('building')
                 .insert([
                     {
-                        title: propType,
+                        title: propTitle,
                         street_address: street,
                         city: city,
                         state: state,
@@ -152,8 +155,8 @@ class scraper{
                         baths_min: bathMin,
                         baths_max: bathMax,
                         description: amenString,
-                        lat: 0,
-                        lng: 0,
+                        lat: lat,
+                        lng: lng,
                     },
                 ]);
 
