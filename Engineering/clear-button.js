@@ -5,7 +5,11 @@
   const bedRadios = document.querySelectorAll('input[name="beds"]');
   const bathRadios = document.querySelectorAll('input[name="baths"]');
 
-  clearButton.addEventListener('click', () => {
+  // clearButton.addEventListener('click', (e) => {
+  //   clearSearch();
+  // });
+
+  function clearSearch() {
     // Clear text/number inputs
     searchBar.value = '';
     budgetInput.value = '';
@@ -31,5 +35,5 @@
     document.querySelector('.bedbath-header').textContent = 'Beds/Baths';
     
     console.log('Cleared all search and category filters!');
-  });
+  }
 

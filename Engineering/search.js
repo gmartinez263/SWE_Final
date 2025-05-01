@@ -15,9 +15,6 @@ export async function searchListings() {
   const sqFt = (sqFtInput.value == "") ? 0 : sqFtInput.value;
   const { beds, baths } = await getBedsAndBaths();
 
-  console.log(sqFt);
-  
-
   // i hate how much repeated code there is but i dont know what to do about it
   // if we want to have the option to not filter by city/zip
 
