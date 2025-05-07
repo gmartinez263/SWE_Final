@@ -55,9 +55,10 @@ function addListingMarker(map, listing) {
     baths_max,
     squarefeet_min,
     squarefeet_max,
+    url
   } = listing;
   const popupContent = `
-      <strong>${title} ${zip}</strong><br>
+      <strong><a href=${url} target="_blank">${title} ${zip}</a></strong><br>
       Price: \$${price_min} - \$${price_max}/month<br>
       Beds: ${beds_min}-${beds_max}    Baths: ${baths_min}-${baths_max}<br>
       Square Feet: ${squarefeet_min} - ${squarefeet_max}<br>
