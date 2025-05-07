@@ -17,8 +17,8 @@ body {
   border-style: solid;
   border-width: 2px;
   border-color: #F6C4B3;
-  width: 1300px;
-  height: 650px;
+  width: 80vw;
+  height: 80vh;
   padding: 10px;
   font-size: 25px;
   position: relative;
